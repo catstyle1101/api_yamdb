@@ -8,6 +8,8 @@ class Users(models.Model):
         ('email address'),
         unique=True)
     
+    # role = models.CharField(max_length=300, choices = CHOICES)
+    # не понял как это реализовывать
     bio = models.TextField(
         max_length=500,
         blank=True)
@@ -22,3 +24,10 @@ class Users(models.Model):
         blank=True
     )
 
+
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
+
+    def __str__(self):
+        return self.username 
