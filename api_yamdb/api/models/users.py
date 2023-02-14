@@ -1,27 +1,35 @@
 from django.db import models
 
 class Users(models.Model):
+    USER = 'user'
+    MODERATOR = 'moderator'
+    ADMIN = 'admin'
+    ROLE_CHOICES = (
+        (USER, 'Аутентифицированный пользователь'),
+        (ADMIN, 'Администратор'),
+        (MODERATOR, 'Модератор')
+    )
     username = models.CharField(
-        max_length=200
+        verbose_name='Имя пользователя',
+        max_length=150,
+        null=False,
+        unique=True
     )
     email = models.EmailField(
-        ('email address'),
-        unique=True)
-    
-    # role = models.CharField(max_length=300, choices = CHOICES)
-    # не понял как это реализовывать
-    bio = models.TextField(
-        max_length=500,
-        blank=True)
-    first_name = models.CharField(
-        ('first name'),
-        max_length=100,
-        blank=True
+        verbose_name='Адрес электронной почты',
+        unique=True,
+        max_length=254
     )
-    last_name = models.CharField(
-        ('last name'),
-        max_length=100,
-        blank=True
+    role = models.CharField(
+        verbose_name='Роль',
+        max_length=50,
+        choices=ROLE_CHOICES,
+        default=USER
+    )
+    bio = models.TextField(
+        'Биография',
+        null=True,
+        blank=True,
     )
 
 
