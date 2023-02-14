@@ -5,6 +5,7 @@ class Categories(models.Model):
     name = models.CharField(
         max_length=256,
         verbose_name='Название',
+        unique=True,
     )
     slug = models.SlugField(
         unique=True,
@@ -17,4 +18,4 @@ class Categories(models.Model):
         verbose_name_plural = 'Категории'
 
     def __str__(self):
-        return self.slug
+        return self.name

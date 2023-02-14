@@ -6,6 +6,7 @@ class Genre(models.Model):
     name = models.CharField(
         max_length=256,
         verbose_name='Название',
+        unique=True,
     )
     slug = models.SlugField(
         unique=True,
@@ -18,7 +19,7 @@ class Genre(models.Model):
         verbose_name_plural = 'Жанры'
 
     def __str__(self):
-        return self.slug
+        return self.name
 
 
 class GenreCategories(models.Model):
@@ -30,3 +31,11 @@ class GenreCategories(models.Model):
         Genre,
         on_delete=models.CASCADE
     )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['title_id', 'genre_id'],
+                name='unique_title_genre'
+            )
+        ]
