@@ -1,5 +1,5 @@
 from django.db import models
-from .titles import Titles
+from api.models.titles import Titles
 
 
 class Genre(models.Model):

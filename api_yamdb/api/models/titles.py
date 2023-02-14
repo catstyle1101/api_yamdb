@@ -1,6 +1,6 @@
 from django.db import models
-from .categories import Categories
-from .validators import year_validator
+from api.models.categories import Categories
+from api.models.validators import year_validator
 
 
 class Titles(models.Model):

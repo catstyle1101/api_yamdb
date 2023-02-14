@@ -1,7 +1,7 @@
 from django.db import models
 
-from api.review import Review
-from api.users import User
+from api.models.review import Review
+from api.models.users import User
 
 
 class Comments(models.Model):

@@ -1,9 +1,11 @@
+from datetime import datetime
+
 from django.conf import settings
 from django.core.exceptions import ValidationError
 
 
-def year_validator(year: int) -> bool:
-    current_date = datetime.date.today().year
+def year_validator(year: int) -> None:
+    current_date = datetime.today().year
     if year > current_date:
         raise ValidationError(f"Year value {year} is not valid")
 
