@@ -107,5 +107,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = ((BASE_DIR / 'static/'),)
 
 MAX_RATING = 10
+CSV_FILES_FOLDER = BASE_DIR / 'static/data/'
 
 AUTH_USER_MODEL = 'core.User'
