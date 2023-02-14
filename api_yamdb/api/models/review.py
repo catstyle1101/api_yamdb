@@ -1,8 +1,8 @@
 from django.db import models
 
-from api.models.titles import Titles
-from api.models.users import User
-from api.models.validators import rating_validator
+from .titles import Titles
+from core.models.users import User
+from .validators import rating_validator
 
 
 class Review(models.Model):

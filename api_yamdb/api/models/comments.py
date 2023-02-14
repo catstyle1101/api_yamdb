@@ -1,7 +1,7 @@
 from django.db import models
 
-from api.models.review import Review
-from api.models.users import User
+from .review import Review
+from core.models.users import User
 
 
 class Comments(models.Model):
@@ -15,7 +15,7 @@ class Comments(models.Model):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='author',
+        related_name='comment_author',
         verbose_name='Автор комментария',
     )
     pub_date = models.DateTimeField(
