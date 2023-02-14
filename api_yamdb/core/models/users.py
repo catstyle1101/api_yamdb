@@ -1,10 +1,13 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+USER = 'user'
+MODERATOR = 'moderator'
+ADMIN = 'admin'
 ROLE_CHOICES = (
-    ("ADMIN", "admin"),
-    ("USER", "user"),
-    ("MODERATOR", "moderator"),
+    (USER, 'Аутентифицированный пользователь'),
+    (ADMIN, 'Администратор'),
+    (MODERATOR, 'Модератор')
 )
 
 
@@ -16,13 +19,16 @@ class User(AbstractUser):
     role = models.CharField(
         max_length=30,
         choices=ROLE_CHOICES,
-        default="USER",
+        default=USER,
         verbose_name="Роль",
     )
 
     class Meta:
         verbose_name = "Пользователь"
         verbose_name_plural = "Пользователи"
+
+    def __str__(self):
+        return self.username
 
     @property
     def is_user(self):
