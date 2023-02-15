@@ -49,9 +49,7 @@ class Command(BaseCommand):
                                     f"модели {field.related_model} в БД "
                                     f"с ключом {key} = {kwargs[key]}"
                                 )
-                            instance_kwargs[key] = (
-
-                            )
+                            instance_kwargs[key] = related_model
                         else:
                             instance_kwargs[key] = kwargs[key]
                     instance = table_class(**instance_kwargs)
