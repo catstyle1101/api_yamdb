@@ -2,89 +2,43 @@ import csv
 
 from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
-from django.utils.dateparse import parse_datetime
 
 from api.models import (
     Categories, Comments, Genre, GenreCategories, Review, Titles)
 from core.models.users import User
 
+
 class Command(BaseCommand):
     help = 'fills database from csvfiles in static folder'
-    file_table = {
-        'category.csv': Categories,
-        'genre.csv': Genre,
-        'users.csv': User,
-        # 'comments.csv': Comments,
-    }
+    file_table = (
+        ('category.csv', Categories),
+        ('genre.csv', Genre),
+        ('users.csv', User),
+        ('titles.csv', Titles),
+        ('genre_title.csv', GenreCategories),
+        ('review.csv', Review),
+        ('comments.csv', Comments),
+    )
 
     def handle(self, *args, **kwargs):
         if not settings.CSV_FILES_FOLDER.exists():
             raise CommandError("add 'data' folder with .csv files")
-
-        for file in settings.CSV_FILES_FOLDER.iterdir():
-            table_name = file.name
-            table_class = self.file_table.get(table_name)
-            if not table_class:
-                continue
+        for file_name, table_class in self.file_table:
+            file = settings.CSV_FILES_FOLDER / file_name
             table_class.objects.all().delete()
+            fields_dict = {field.name: field
+                           for field in table_class._meta.get_fields()}
             with open(file, mode='r', newline='', encoding='utf-8') as f:
                 reader = csv.DictReader(f)
                 for kwargs in reader:
-                    instance = table_class(**kwargs)
+                    instance_kwargs = dict()
+                    for key in kwargs:
+                        field = fields_dict.get(key)
+                        if field.is_relation:
+                            instance_kwargs[key] = (
+                                field.related_model.objects.get(id=kwargs[key])
+                            )
+                        else:
+                            instance_kwargs[key] = kwargs[key]
+                    instance = table_class(**instance_kwargs)
                     instance.save(force_insert=True)
-        with open(
-                settings.CSV_FILES_FOLDER / 'titles.csv',
-                mode='r', newline='', encoding='utf-8'
-        ) as f:
-            reader = csv.DictReader(f)
-            Titles.objects.all().delete()
-            for row in reader:
-                Titles.objects.create(
-                    id=row.get('id'),
-                    name=row.get('name'),
-                    year=row.get('year'),
-                    category=Categories.objects.get(id=row.get('category')),
-                )
-        with open(
-            settings.CSV_FILES_FOLDER / 'genre_title.csv',
-                mode='r', newline='', encoding='utf-8'
-        ) as f:
-            reader = csv.DictReader(f)
-            GenreCategories.objects.all().delete()
-            for row in reader:
-                GenreCategories.objects.create(
-                    id=row.get('id'),
-                    title_id=Titles.objects.get(id=row.get('title_id')),
-                    genre_id=Genre.objects.get(id=row.get('genre_id')),
-                )
-        with open(
-                settings.CSV_FILES_FOLDER / 'review.csv',
-                mode='r', newline='', encoding='utf-8'
-        ) as f:
-            reader = csv.DictReader(f)
-            Review.objects.all().delete()
-            for row in reader:
-                Review.objects.create(
-                    id=row.get('id'),
-                    title_id=Titles.objects.get(id=row.get('title_id')),
-                    text=row.get('text'),
-                    author=User.objects.get(id=row.get('author')),
-                    score=row.get('score'),
-                    pub_date=parse_datetime(row.get('pub_date')),
-                )
-        with open(
-                settings.CSV_FILES_FOLDER / 'comments.csv',
-                mode='r', newline='', encoding='utf-8'
-        ) as f:
-            reader = csv.DictReader(f)
-            Comments.objects.all().delete()
-            for row in reader:
-                Comments.objects.create(
-                    id=row.get('id'),
-                    review_id=Review.objects.get(id=row.get('review_id')),
-                    text=row.get('text'),
-                    author=User.objects.get(id=row.get('author')),
-                    pub_date=parse_datetime(row.get('pub_date')),
-                )
-
-
