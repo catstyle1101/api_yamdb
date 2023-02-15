@@ -40,7 +40,8 @@ class Command(BaseCommand):
                         field = fields_dict.get(key)
                         if field.is_relation:
                             related_model = (
-                                field.related_model.objects.get(id=kwargs[key]))
+                                field.related_model.objects.get(
+                                    id=kwargs[key]))
                             if not related_model:
                                 raise CommandError(
                                     f"Для модели {table_class} в поле "
