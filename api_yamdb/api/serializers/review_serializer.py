@@ -1,9 +1,9 @@
 from rest_framework import serializers
 
-from api.models import Comments
+from api.models import Review
 
 
-class CommentSerializer(serializers.ModelSerializer):
+class ReviewSerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(
         slug_field="username",
         default=serializers.CurrentUserDefault(),
@@ -11,5 +11,5 @@ class CommentSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = Comments
-        fields = ("id", "text", "author", "pub_date")
+        model = Review
+        fields = ("id", "text", "author", "score", "pub_date")
