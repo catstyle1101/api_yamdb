@@ -5,6 +5,7 @@ from api.views.categories import CategoryViewSet
 from api.views.comment import CommentViewSet
 from api.views.genres import GenreViewSet
 from api.views.titles import TitlesViewSet
+from api.views.review import ReviewViewset
 
 app_name = "api"
 router_v1 = routers.DefaultRouter()
@@ -12,6 +13,11 @@ router_v1.register(
     r"titles/(?P<title_id>\d+)/reviews/(?P<review_id>\d+)/comments",
     CommentViewSet,
     basename='comments'
+)
+router_v1.register(
+    r"titles/(?P<title_id>\d+)/reviews",
+    ReviewViewset,
+    basename='reviews',
 )
 router_v1.register('titles', TitlesViewSet, basename='titles')
 router_v1.register('genres', GenreViewSet, basename='genres')
