@@ -20,6 +20,10 @@ class Review(models.Model):
         verbose_name='Автор отзыва',
     )
     score = models.IntegerField(validators=(rating_validator,))
+    pub_date = models.DateTimeField(
+        'Дата добавления',
+        auto_now_add=True
+    )
 
     class Meta:
         verbose_name = 'Отзыв'
