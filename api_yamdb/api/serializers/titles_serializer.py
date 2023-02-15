@@ -2,8 +2,8 @@ from rest_framework import serializers
 from api.models.titles import Titles
 from api.models.genres import Genre
 from api.models.categories import Categories
-from api_yamdb.api.serializers.genres_serializer import GenreSerializer
-from api_yamdb.api.serializers.categories_serizlizer import CategorySerializer
+from api.serializers.genres_serializer import GenreSerializer
+from api.serializers.categories_serizlizer import CategorySerializer
 
 
 class GetTitleSerializer(serializers.ModelSerializer):

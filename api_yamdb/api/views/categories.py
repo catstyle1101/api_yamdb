@@ -1,5 +1,5 @@
 from api.models.categories import Categories
-from api_yamdb.api.serializers.categories_serizlizer import CategorySerializer
+from api.serializers.categories_serizlizer import CategorySerializer
 from rest_framework import viewsets, filters, mixins
 
 

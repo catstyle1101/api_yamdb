@@ -1,6 +1,6 @@
 from api.models.titles import Titles
-from api_yamdb.api.serializers.titles_serializer import (TitlesSerializer,
-                                                         GetTitleSerializer)
+from api.serializers.titles_serializer import (TitlesSerializer,
+                                               GetTitleSerializer)
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 

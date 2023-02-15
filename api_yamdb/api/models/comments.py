@@ -11,7 +11,7 @@ class Comments(models.Model):
         related_name='comments',
         verbose_name='Коментарии',
     )
-    text = models.TextField(),
+    text = models.TextField()
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
