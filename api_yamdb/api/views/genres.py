@@ -1,5 +1,5 @@
 from api.models.genres import Genre
-from api.serializers.titles import GenreSerializer
+from api_yamdb.api.serializers.titles_serializer import GenreSerializer
 from rest_framework import viewsets, filters, mixins
 
 
