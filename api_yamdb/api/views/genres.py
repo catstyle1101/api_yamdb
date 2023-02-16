@@ -16,3 +16,4 @@ class GenreViewSet(ListCreateDeleteViewSet):
     # permission_classes = False
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name',)
+    lookup_field = 'slug'
