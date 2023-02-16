@@ -1,5 +1,6 @@
 from django.db import models
 from .categories import Categories
+from .genres import Genre
 from .validators import year_validator
 
 
@@ -19,3 +20,23 @@ class Titles(models.Model):
         related_name='title',
         verbose_name='Категория',
     )
+    genre = models.ManyToManyField(Genre, through='GenreCategories')
+
+
+class GenreCategories(models.Model):
+    title_id = models.ForeignKey(
+        Titles,
+        on_delete=models.CASCADE
+    )
+    genre_id = models.ForeignKey(
+        Genre,
+        on_delete=models.CASCADE
+    )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['title_id', 'genre_id'],
+                name='unique_title_genre'
+            )
+        ]
