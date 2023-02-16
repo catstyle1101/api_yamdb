@@ -1,5 +1,3 @@
-from django.shortcuts import get_object_or_404
-
 from api.models.categories import Categories
 from api.serializers.categories_serizlizer import CategorySerializer
 from rest_framework import viewsets, filters, mixins
