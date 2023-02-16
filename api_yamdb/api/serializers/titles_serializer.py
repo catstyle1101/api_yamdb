@@ -9,12 +9,14 @@ from api.serializers.categories_serizlizer import CategorySerializer
 class GetTitleSerializer(serializers.ModelSerializer):
     genre = GenreSerializer(many=True)
     category = CategorySerializer()
+    rating = serializers.IntegerField(read_only=True)
 
     class Meta:
         fields = (
             'id',
             'name',
             'year',
+            'rating',
             'description',
             'genre',
             'category'
