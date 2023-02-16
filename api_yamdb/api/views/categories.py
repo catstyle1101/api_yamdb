@@ -13,6 +13,6 @@ class ListCreateDeleteViewSet(mixins.ListModelMixin,
 class CategoryViewSet(ListCreateDeleteViewSet):
     queryset = Categories.objects.all()
     serializer_class = CategorySerializer
-    #permission_classes = False
+    # permission_classes = False
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name',)
