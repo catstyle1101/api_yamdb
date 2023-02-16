@@ -116,23 +116,14 @@ CSV_FILES_FOLDER = BASE_DIR / 'static/data/'
 AUTH_USER_MODEL = 'core.User'
 
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'api.pagination.LimitOffsetCustomPagination',
-    'PAGE_SIZE': 10
-}
-
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'api.pagination.LimitOffsetCustomPagination',
-    'PAGE_SIZE': 10
-}
-
-
-REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ],
-    'DEFAULT_AUTHENTICATION_CLASSES': (
+    'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'api.pagination.LimitOffsetCustomPagination',
+    'PAGE_SIZE': 10
 }
 
 SIMPLE_JWT = {
