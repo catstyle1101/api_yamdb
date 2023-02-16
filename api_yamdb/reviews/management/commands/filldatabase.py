@@ -4,8 +4,8 @@ from argparse import RawTextHelpFormatter
 from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
 
-from api.models import (
-    Categories, Comments, Genre, GenreCategories, Review, Titles)
+from reviews.models import (
+    Categories, Comments, Genre, GenreCategories, Review, Title)
 from core.models.users import User
 
 
@@ -24,7 +24,7 @@ class Command(BaseCommand):
         ('category.csv', Categories),
         ('genre.csv', Genre),
         ('users.csv', User),
-        ('titles.csv', Titles),
+        ('titles.csv', Title),
         ('genre_title.csv', GenreCategories),
         ('review.csv', Review),
         ('comments.csv', Comments),

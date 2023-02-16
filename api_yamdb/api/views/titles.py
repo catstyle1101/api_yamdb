@@ -1,21 +1,21 @@
-from django.db.models import Avg
+from django_filters import rest_framework as filters
 
-from api.models.titles import Titles
+from api.filters import TitleFilter
+from reviews.models.title import Title
+from api.permissions import ReadOnly, IsAdmin
 from api.serializers.titles_serializer import (TitlesSerializer,
                                                GetTitleSerializer)
-from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 
 
 class TitlesViewSet(viewsets.ModelViewSet):
-    queryset = Titles.objects.annotate(
-        rating=Avg('review__score'),
-    ).all()
-    # permission_classes = False
-    filter_backends = (DjangoFilterBackend, )
-    filterset_fields = ('category__slug', 'genre__slug', 'name', 'year')
+    queryset = Title.objects.all()
+    serializer_class = GetTitleSerializer
+    permission_classes = (IsAdmin | ReadOnly, )
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = TitleFilter
 
     def get_serializer_class(self):
-        if self.action in ['retrieve', 'list']:
-            return GetTitleSerializer
-        return TitlesSerializer
+        if self.request.method in ['POST', 'PATCH']:
+            return TitlesSerializer
+        return GetTitleSerializer

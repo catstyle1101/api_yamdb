@@ -4,7 +4,7 @@ from .genres import Genre
 from .validators import year_validator
 
 
-class Titles(models.Model):
+class Title(models.Model):
     name = models.CharField(
         max_length=256,
         verbose_name='Название',
@@ -17,20 +17,26 @@ class Titles(models.Model):
         Categories,
         on_delete=models.SET_NULL,
         null=True,
-        related_name='title',
+        blank=True,
+        related_name='category',
         verbose_name='Категория',
     )
-    genre = models.ManyToManyField(Genre, through='GenreCategories')
+    genre = models.ManyToManyField(
+        'Genre',
+        through='GenreCategories',
+        related_name='genre',
+        verbose_name='Жанр',
+    )
 
 
 class GenreCategories(models.Model):
     title_id = models.ForeignKey(
-        Titles,
-        on_delete=models.CASCADE
+        Title,
+        on_delete=models.CASCADE,
     )
     genre_id = models.ForeignKey(
         Genre,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
     )
 
     class Meta:

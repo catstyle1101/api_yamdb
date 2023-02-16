@@ -6,7 +6,7 @@ from api.views.comment import CommentViewSet
 from api.views.genres import GenreViewSet
 from api.views.titles import TitlesViewSet
 from api.views.review import ReviewViewset
-from api.views.users import UserSingupView, UserGetTokenView
+from api.views.users import GetConfirmationCodeView, SignUpView, GetTokenView
 
 app_name = "api"
 router_v1 = routers.DefaultRouter()
@@ -26,6 +26,8 @@ router_v1.register('categories', CategoryViewSet, basename='categories')
 
 urlpatterns = [
     path('v1/', include(router_v1.urls)),
-    path('v1/auth/signup/', UserSingupView.as_view()),
-    path('v1/auth/token/', UserGetTokenView.as_view()),
+    path('v1/auth/code/', GetConfirmationCodeView.as_view(),
+         name='get_confirmation_code'),
+    path('v1/auth/signup/', SignUpView.as_view(), name='signup'),
+    path('v1/auth/token/', GetTokenView.as_view(), name='login'),
 ]

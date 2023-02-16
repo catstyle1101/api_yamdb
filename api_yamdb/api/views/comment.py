@@ -1,12 +1,14 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 
-from api.models import Review
+from reviews.models import Review
+from api.permissions import IsAuthorOrReadOnly, IsModerator, IsAdmin
 from api.serializers.comments_serializer import CommentSerializer
 
 
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
+    permission_classes = (IsAdmin | IsModerator | IsAuthorOrReadOnly, )
 
     def get_review(self):
         return get_object_or_404(Review, pk=self.kwargs.get("review_id"))

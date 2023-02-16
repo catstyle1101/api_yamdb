@@ -1,15 +1,15 @@
 from django.db import models
 
-from .titles import Titles
+from .title import Title
 from core.models.users import User
 from .validators import rating_validator
 
 
 class Review(models.Model):
-    title_id = models.ForeignKey(
-        Titles,
+    title = models.ForeignKey(
+        Title,
         on_delete=models.CASCADE,
-        related_name='review',
+        related_name='reviews',
         verbose_name='Отзыв',
     )
     text = models.TextField()
@@ -28,6 +28,12 @@ class Review(models.Model):
     class Meta:
         verbose_name = 'Отзыв'
         verbose_name_plural = 'Отзывы'
+        constraints = [
+            models.UniqueConstraint(
+                fields=['title', 'author'],
+                name='unique_title_author_review'
+            )
+        ]
 
     def __str__(self):
         return self.text
