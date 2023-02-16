@@ -1,7 +1,8 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, status
 from api_yamdb.api.permissions import IsAdmin
-from api_yamdb.api.serializers import TokenSerializer, UserSerializer
+from api_yamdb.api.serializers.users_serializers import (
+    TokenSerializer, UserSerializer)
 from core.models.users import User
 from rest_framework.filters import SearchFilter
 from rest_framework.decorators import action
@@ -21,7 +22,7 @@ class UserViewSet(viewsets.ModelViewSet):
     search_fields = ('username')
 
     @action(
-        methods=['GET','PATCH'],
+        methods=['GET', 'PATCH'],
         detail=False,
         permission_classes=(IsAuthenticated,),
         serializer_class=UserSerializer,
@@ -68,11 +69,12 @@ class UserGetTokenView(GenericAPIView):
 
         if serializer.is_valid(raise_exception=True):
             return Response(serializer.data, status=status.HTTP_200_OK)
-        
+
         username = serializer.validated_data.get('username')
         confirmation_code = serializer.validated_data.get('confirmation_code')
         user = get_object_or_404(User, username=username)
 
         if not default_token_generator.check_token(user, confirmation_code):
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.data, status=status.HTTP_200_OK)

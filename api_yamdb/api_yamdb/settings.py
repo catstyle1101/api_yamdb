@@ -26,7 +26,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'drf_yasg',
-    #тут будет главный проект
     'rest_framework_simplejwt',
     'core',
     'api',
