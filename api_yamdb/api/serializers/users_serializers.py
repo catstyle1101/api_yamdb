@@ -1,5 +1,3 @@
-import re
-
 from django.conf import settings
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
@@ -7,12 +5,11 @@ from rest_framework.exceptions import ValidationError
 from core.models.users import User
 
 
-class UserSerializer(serializers.ModelSerializer):
-    username = serializers.RegexField('^[\w.@+-]+$')
-    email = serializers.EmailField(required=True, max_length=254)
+class ForAdminUserSerializer(serializers.ModelSerializer):
 
     class Meta:
-        fields = ('username', 'email', 'first_name', 'last_name', 'bio', 'role')
+        fields = (
+            'username', 'email', 'first_name', 'last_name', 'bio', 'role')
         model = User
 
     def validate_username(self, value):
@@ -22,12 +19,14 @@ class UserSerializer(serializers.ModelSerializer):
         return value
 
 
-class UserPatchSerializer(serializers.ModelSerializer):
-    username = serializers.RegexField('^[\w.@+-]+$')
+class UserSerializer(serializers.ModelSerializer):
+    username = serializers.RegexField(r'^[\w.@+-]+$')
     email = serializers.EmailField(required=True, max_length=254)
     role = serializers.StringRelatedField(read_only=True)
+
     class Meta:
-        fields = ('username', 'email', 'first_name', 'last_name', 'bio', 'role')
+        fields = (
+            'username', 'email', 'first_name', 'last_name', 'bio', 'role')
         model = User
 
     def validate_username(self, value):
