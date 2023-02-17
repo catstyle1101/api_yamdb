@@ -29,7 +29,7 @@ class UserViewSet(viewsets.ModelViewSet):
         permission_classes=(IsAuthenticated,),
         serializer_class=UserSerializer,
     )
-    def profile(self, request):
+    def me(self, request):
         if request.method == "GET":
             serializer = UserSerializer(request.user)
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -42,7 +42,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 class GetConfirmationCodeView(GenericAPIView):
     permission_classes = (AllowAny, )
-    serializer_class = TokenSerializer
+    serializer_class = UserSerializer
 
     def post(self, request):
         serializer = self.get_serializer(data=request.data)
