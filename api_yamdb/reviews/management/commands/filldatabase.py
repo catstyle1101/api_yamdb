@@ -17,8 +17,8 @@ class Command(BaseCommand):
     - titles.csv Столбцы: id, name, year, category
     - users.csv Столбцы: id, username, email, role, bio, first_name, last_name
     - genre_title.csv Столбцы: id, title_id, genre_id
-    - review.csv Столбцы: id, title_id, text, author, score, pub_date
-    - comments.csv Столбцы: id, review_id, text, author, pub_date
+    - review.csv Столбцы: id, title, text, author, score, pub_date
+    - comments.csv Столбцы: id, review, text, author, pub_date
     """
     file_table = (
         ('category.csv', Categories),
