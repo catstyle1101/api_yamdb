@@ -5,7 +5,7 @@ from core.models.users import User
 
 
 class Comments(models.Model):
-    review_id = models.ForeignKey(
+    review = models.ForeignKey(
         Review,
         on_delete=models.CASCADE,
         related_name='comments',
