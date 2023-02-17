@@ -42,7 +42,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 class GetConfirmationCodeView(GenericAPIView):
     permission_classes = (AllowAny, )
-    serializer_class = UserSerializer
+    serializer_class = TokenSerializer
 
     def post(self, request):
         serializer = self.get_serializer(data=request.data)

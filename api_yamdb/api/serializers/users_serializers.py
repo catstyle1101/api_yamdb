@@ -4,13 +4,23 @@ from core.models.users import User
 
 
 class UserSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(required=True)
-    email = serializers.EmailField(required=True)
 
     class Meta:
-        fields = ('username', 'email')
+        fields = ('first_name','last_name','username',
+                  'email','bio','role')
         model = User
 
+    def validate_username(self, username):
+        if username == 'me':
+            raise serializers.ValidationError(
+                'Имя пользователя "me" не разрешено.'
+            )
+        return username
+
+    def validate_email(self, email):
+        if email == "":
+            raise serializers.ValidationError('Поле почты не заолненно')
+        return email
 
 class TokenSerializer(serializers.Serializer):
     username = serializers.CharField(required=True)

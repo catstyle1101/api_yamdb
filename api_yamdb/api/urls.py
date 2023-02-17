@@ -6,7 +6,7 @@ from api.views.comment import CommentViewSet
 from api.views.genres import GenreViewSet
 from api.views.titles import TitlesViewSet
 from api.views.review import ReviewViewset
-from api.views.users import GetConfirmationCodeView, SignUpView, GetTokenView
+from api.views.users import GetConfirmationCodeView, SignUpView, GetTokenView, UserViewSet
 
 app_name = "api"
 router_v1 = routers.DefaultRouter()
@@ -23,6 +23,7 @@ router_v1.register(
 router_v1.register('titles', TitlesViewSet, basename='titles')
 router_v1.register('genres', GenreViewSet, basename='genres')
 router_v1.register('categories', CategoryViewSet, basename='categories')
+router_v1.register(r'users', UserViewSet, basename='users')
 
 urlpatterns = [
     path('v1/', include(router_v1.urls)),
