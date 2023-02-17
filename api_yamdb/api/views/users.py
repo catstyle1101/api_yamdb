@@ -21,23 +21,20 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAdmin,)
     lookup_field = 'username'
     filter_backends = (SearchFilter,)
-    search_fields = ('username')
+    search_fields = ('username', )
 
-    @action(
-        methods=['GET', 'PATCH'],
-        detail=False,
-        permission_classes=(IsAuthenticated,),
-        serializer_class=UserSerializer,
-    )
-    def profile(self, request):
-        if request.method == "GET":
-            serializer = UserSerializer(request.user)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-
-        serializer = UserSerializer(request.user, request.data)
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+        if User.objects.filter(
+                username=self.request.data.get('username'),
+                email=self.request.data.get('email'),
+        ).exists():
+            return Response(
+                serializer.validated_data, status=status.HTTP_200_OK)
         serializer.save()
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(
+            serializer.validated_data, status=status.HTTP_201_CREATED)
 
 
 class GetConfirmationCodeView(GenericAPIView):
@@ -82,10 +79,16 @@ class SignUpView(GenericAPIView):
 
     def post(self, request):
         serializer = self.get_serializer(data=request.data)
+        if User.objects.filter(
+                username=self.request.data.get('username'),
+                email=self.request.data.get('email'),
+        ).exists():
+            return Response(
+                request.data, status=status.HTTP_200_OK)
         if serializer.is_valid():
             user = serializer.save()
             send_confirmation_code(user)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.validated_data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
