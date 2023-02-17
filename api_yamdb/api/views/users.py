@@ -22,9 +22,7 @@ class UserViewSet(viewsets.ModelViewSet):
     lookup_field = 'username'
     filter_backends = (SearchFilter,)
     search_fields = ('username', )
-
-    def update(self, request, *args, **kwargs):
-        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    http_method_names = ("get", "post", "delete", "patch")
 
     @action(
         detail=False, methods=['get', 'patch'],
