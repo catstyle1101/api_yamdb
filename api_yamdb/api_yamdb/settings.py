@@ -49,6 +49,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [TEMPLATES_DIR, ],
+
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -94,7 +95,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'
 
@@ -112,6 +113,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = ((BASE_DIR / 'static/'),)
 
 MAX_RATING = 10
+
 CSV_FILES_FOLDER = BASE_DIR / 'static/data/'
 
 AUTH_USER_MODEL = 'core.User'
@@ -132,9 +134,8 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
-#  подключаем движок filebased.EmailBackend
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-# указываем директорию, в которую будут складываться файлы писем
+
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
 
 MAX_USERNAME_LENGTH = 150
