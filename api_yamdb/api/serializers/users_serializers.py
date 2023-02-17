@@ -22,6 +22,21 @@ class UserSerializer(serializers.ModelSerializer):
         return value
 
 
+class UserPatchSerializer(serializers.ModelSerializer):
+    username = serializers.RegexField('^[\w.@+-]+$')
+    email = serializers.EmailField(required=True, max_length=254)
+    role = serializers.StringRelatedField(read_only=True)
+    class Meta:
+        fields = ('username', 'email', 'first_name', 'last_name', 'bio', 'role')
+        model = User
+
+    def validate_username(self, value):
+        if len(value) > settings.MAX_USERNAME_LENGTH:
+            raise ValidationError("Длина username не должна быть более "
+                                  f"{settings.MAX_USERNAME_LENGTH} символов")
+        return value
+
+
 class TokenSerializer(serializers.Serializer):
     username = serializers.CharField(required=True)
     confirmation_code = serializers.CharField(required=True)

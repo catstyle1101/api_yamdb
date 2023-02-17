@@ -1,11 +1,14 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, mixins
 from rest_framework.generics import GenericAPIView
+from rest_framework.mixins import UpdateModelMixin, CreateModelMixin, \
+    RetrieveModelMixin
+from rest_framework.viewsets import GenericViewSet
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from api.permissions import IsAdmin
 from api.serializers.users_serializers import (
-    UserSerializer, TokenSerializer, SignupSerializer)
+    UserSerializer, TokenSerializer, SignupSerializer, UserPatchSerializer)
 from core.models.users import User
 from rest_framework.filters import SearchFilter
 from rest_framework.decorators import action
@@ -35,6 +38,26 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer.save()
         return Response(
             serializer.validated_data, status=status.HTTP_201_CREATED)
+
+    def update(self, request, *args, **kwargs):
+        # if self.request.user.is_admin:
+        #     return super().update(request, *args, **kwargs)
+        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    @action(
+            detail=False, methods=['get', 'patch'],
+            url_path='me', url_name='me',
+            permission_classes=(IsAuthenticated,)
+        )
+    def about_me(self, request):
+        serializer = UserSerializer(request.user)
+        if request.method == 'PATCH':
+            serializer = UserPatchSerializer(
+                request.user, data=request.data, partial=True
+            )
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class GetConfirmationCodeView(GenericAPIView):
