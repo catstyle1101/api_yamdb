@@ -37,12 +37,12 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         if not settings.CSV_FILES_FOLDER.exists():
-            raise CommandError("Добавьте папку 'data' с .csv файлами")
+            raise CommandError('Добавьте папку "data" с .csv файлами')
         for file_name, class_ in self.file_table:
             file_path = settings.CSV_FILES_FOLDER / file_name
             if not file_path.exists():
                 raise CommandError(
-                    f"Файл {file_path.name} не найден"
+                    f'Файл {file_path.name} не найден'
                 )
             class_.objects.all().delete()
             class_fields = {field.name: field
@@ -59,10 +59,10 @@ class Command(BaseCommand):
                                     id=kwargs.get(key)))
                             if not related_model:
                                 raise CommandError(
-                                    f"Для модели {class_} в поле "
-                                    f"{field.name} не найдено связанной "
-                                    f"модели {field.related_model} в БД "
-                                    f"с ключом {key} = {kwargs[key]}"
+                                    f'Для модели {class_} в поле '
+                                    f'{field.name} не найдено связанной '
+                                    f'модели {field.related_model} в БД '
+                                    f'с ключом {key} = {kwargs[key]}'
                                 )
                             instance_kwargs[key] = related_model
                         else:

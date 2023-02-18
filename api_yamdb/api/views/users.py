@@ -10,8 +10,10 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from api.permissions import IsAdmin
-from api.serializers import (ForAdminUserSerializer, SignupSerializer,
-                             TokenSerializer, UserSerializer)
+from api.serializers import (
+    ForAdminUserSerializer, SignupSerializer,
+    TokenSerializer, UserSerializer
+)
 from core.models.users import User
 
 

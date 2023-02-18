@@ -14,8 +14,10 @@ class ForAdminUserSerializer(serializers.ModelSerializer):
 
     def validate_username(self, value):
         if len(value) > settings.MAX_USERNAME_LENGTH:
-            raise ValidationError("Длина username не должна быть более "
-                                  f"{settings.MAX_USERNAME_LENGTH} символов")
+            raise ValidationError(
+                'Длина username не должна быть более '
+                f'{settings.MAX_USERNAME_LENGTH} символов'
+            )
         return value
 
 
@@ -31,8 +33,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     def validate_username(self, value):
         if len(value) > settings.MAX_USERNAME_LENGTH:
-            raise ValidationError("Длина username не должна быть более "
-                                  f"{settings.MAX_USERNAME_LENGTH} символов")
+            raise ValidationError('Длина username не должна быть более '
+                                  f'{settings.MAX_USERNAME_LENGTH} символов')
         return value
 
 
