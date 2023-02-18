@@ -28,6 +28,13 @@ class Title(models.Model):
         verbose_name='Жанр',
     )
 
+    class Meta:
+        verbose_name = 'Произведение'
+        verbose_name_plural = 'Произведений'
+
+    def __str__(self):
+        return f'{self.id}: {self.name}'
+
 
 class GenreCategories(models.Model):
     title_id = models.ForeignKey(
@@ -40,6 +47,8 @@ class GenreCategories(models.Model):
     )
 
     class Meta:
+        verbose_name = 'Жанр'
+        verbose_name_plural = 'Жанров'
         constraints = [
             models.UniqueConstraint(
                 fields=['title_id', 'genre_id'],
