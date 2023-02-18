@@ -2,7 +2,7 @@ from django.db.models import Avg
 from rest_framework import serializers
 
 from api.serializers import CategorySerializer, GenreSerializer
-from reviews.models.categories import Categories, Genre, Title
+from reviews.models import Categories, Genre, Title
 
 
 class GetTitleSerializer(serializers.ModelSerializer):
