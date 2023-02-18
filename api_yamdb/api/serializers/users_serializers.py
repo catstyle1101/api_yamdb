@@ -52,8 +52,8 @@ class SignupSerializer(serializers.ModelSerializer):
         fields = ('username', 'email',)
 
     def validate_username(self, value):
-        if value == 'me':
+        if value in settings.RESTRICTED_USERNAMES:
             raise serializers.ValidationError(
-                'Имя пользователя "me" не разрешено.'
+                f'Имя пользователя {value} не разрешено.'
             )
         return value

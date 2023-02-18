@@ -9,7 +9,7 @@ class Title(models.Model):
         max_length=256,
         verbose_name='Название',
     )
-    year = models.IntegerField(validators=(year_validator,))
+    year = models.PositiveSmallIntegerField(validators=(year_validator,))
     description = models.TextField(
         verbose_name='Описание',
         blank=True)

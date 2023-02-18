@@ -6,14 +6,14 @@ from reviews.models import Review
 
 class ReviewSerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(
-        slug_field="username",
+        slug_field='username',
         default=serializers.CurrentUserDefault(),
         read_only=True,
     )
 
     class Meta:
         model = Review
-        fields = ("id", "text", "author", "score", "pub_date")
+        fields = ('id', 'text', 'author', 'score', 'pub_date')
 
     def validate(self, data):
         if self.context['request'].method != 'POST':
@@ -29,8 +29,9 @@ class ReviewSerializer(serializers.ModelSerializer):
         return data
 
     def validate_score(self, value):
-        if not 1 <= value <= 10:
+        if not settings.MIN_RATING <= value <= settings.MAX_RATING:
             raise serializers.ValidationError(
-                f'Оценка должна быть в диапазоне от 1 до {settings.MAX_RATING}'
+                f'Оценка должна быть в диапазоне от {settings.MIN_RATING} '
+                f'до {settings.MAX_RATING}'
             )
         return value

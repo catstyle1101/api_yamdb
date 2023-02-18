@@ -113,6 +113,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = ((BASE_DIR / 'static/'),)
 
 MAX_RATING = 10
+MIN_RATING = 1
+RESTRICTED_USERNAMES = ('me', )
 
 CSV_FILES_FOLDER = BASE_DIR / 'static/data/'
 

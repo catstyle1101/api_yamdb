@@ -1,11 +1,10 @@
 from django_filters import rest_framework as filters
+from rest_framework import viewsets
 
 from api.filters import TitleFilter
+from api.permissions import IsAdmin, ReadOnly
+from api.serializers import GetTitleSerializer, TitlesSerializer
 from reviews.models.title import Title
-from api.permissions import ReadOnly, IsAdmin
-from api.serializers.titles_serializer import (TitlesSerializer,
-                                               GetTitleSerializer)
-from rest_framework import viewsets
 
 
 class TitlesViewSet(viewsets.ModelViewSet):

@@ -3,14 +3,14 @@ from django.db import models
 
 class Categories(models.Model):
     name = models.CharField(
+        'Название',
         max_length=256,
-        verbose_name='Название',
         unique=True,
     )
     slug = models.SlugField(
+        'Слаг',
         unique=True,
         max_length=50,
-        verbose_name='Слаг'
     )
 
     class Meta:
