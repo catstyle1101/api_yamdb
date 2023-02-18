@@ -22,7 +22,7 @@ class UserViewSet(viewsets.ModelViewSet):
     lookup_field = 'username'
     filter_backends = (SearchFilter,)
     search_fields = ('username', )
-    http_method_names = ("get", "post", "delete", "patch")
+    http_method_names = ('get', 'post', 'delete', 'patch')
 
     @action(
         detail=False, methods=['get', 'patch'],
