@@ -4,7 +4,7 @@ from rest_framework import viewsets
 from api.filters import TitleFilter
 from api.permissions import IsAdmin, ReadOnly
 from api.serializers import GetTitleSerializer, TitlesSerializer
-from reviews.models.title import Title
+from reviews.models import Title
 
 
 class TitlesViewSet(viewsets.ModelViewSet):

@@ -3,7 +3,7 @@ from rest_framework import filters
 from api.mixins import ListCreateDeleteViewSet
 from api.permissions import IsAdmin, ReadOnly
 from api.serializers import GenreSerializer
-from reviews.models.genres import Genre
+from reviews.models import Genre
 
 
 class GenreViewSet(ListCreateDeleteViewSet):

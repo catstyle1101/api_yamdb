@@ -11,5 +11,5 @@ def year_validator(year: int) -> None:
 
 
 def rating_validator(rating) -> None:
-    if not (0 < int(rating) <= settings.MAX_RATING):
+    if not (settings.MIN_RATING <= int(rating) <= settings.MAX_RATING):
         raise ValidationError(f"Rating value {rating} is not valid")
